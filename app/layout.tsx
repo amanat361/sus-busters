@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Button } from "@/components/primitives/button";
+import { HomeIcon } from "@heroicons/react/16/solid";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="flex min-h-screen flex-col">
+          <div className="items-center flex gap-4 bg-black dark:bg-white p-2 justify-end">
+            {/* <Navbar /> */}
+            <Button href="/" color="white">
+              <HomeIcon />
+              Home
+            </Button>
+          </div>
+          <main className="flex-1 p-12">{children}</main>
+        </div>
+      </body>
     </html>
   );
 }
