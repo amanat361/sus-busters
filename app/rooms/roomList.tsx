@@ -1,20 +1,30 @@
 "use client";
 
+import { Text } from "@/components/primitives/text";
+import Link from "next/link";
+import { useState } from "react";
+import RoomCard from "./roomCard";
+import CreateRoomButton from "@/components/createRoom";
+
+export type Room = {
+  id: string;
+  name: string;
+};
+
 export default function RoomList() {
+  const [rooms, setRooms] = useState<Room[]>([]);
+
   return (
-    <div>
-      <h1>Rooms</h1>
-      <ul>
-        <li>
-          <a href="/rooms/room-1">Room 1</a>
-        </li>
-        <li>
-          <a href="/rooms/room-2">Room 2</a>
-        </li>
-        <li>
-          <a href="/rooms/room-3">Room 3</a>
-        </li>
-      </ul>
+    <div className="flex flex-col gap-4">
+      {rooms.length === 0 && <Text>No rooms yet</Text>}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {rooms.map((room) => (
+          <RoomCard key={room.id} {...room} />
+        ))}
+      </div>
+      <CreateRoomButton
+        onCreateRoom={(room) => setRooms((rooms) => [...rooms, room])}
+      />
     </div>
   );
 }

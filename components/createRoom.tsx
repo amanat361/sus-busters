@@ -4,21 +4,21 @@ import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import { Button } from "./primitives/button";
 import { useState } from "react";
 import { nanoid } from "nanoid";
+import { Room } from "@/app/rooms/roomList";
 
-export default function CreateRoomButton() {
+export default function CreateRoomButton({ onCreateRoom }: { onCreateRoom: (room: Room) => void }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [roomId, setRoomId] = useState(nanoid());
-  const [roomName, setRoomName] = useState("");
 
   const createRoom = async () => {
+    setIsLoading(true);
     const roomName = await getRoomName();
     const roomId = nanoid();
-    setRoomName(roomName);
-    setRoomId(roomId);
+    onCreateRoom({ id: roomId, name: roomName });
+    setIsLoading(false);
   }
 
   return (
-    <Button href={`/rooms/${roomId}`} disabled={isLoading}>
+    <Button onClick={createRoom} disabled={isLoading} className="w-fit">
       {isLoading ? "Creating room..." : "Create Room"}
       <PlusCircleIcon />
     </Button>

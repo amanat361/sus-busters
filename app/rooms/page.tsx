@@ -3,7 +3,7 @@ import RoomList from "./roomList";
 
 export default function Room() {
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <Heading>Rooms</Heading>
       <RoomList />
     </div>
