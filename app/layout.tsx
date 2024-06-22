@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Button } from "@/components/primitives/button";
 import { HomeIcon } from "@heroicons/react/16/solid";
+import { Navbar } from "@/components/primitives/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex min-h-screen flex-col">
-          <div className="items-center flex gap-4 bg-black dark:bg-white p-2 justify-end">
-            {/* <Navbar /> */}
-            <Button href="/" color="white">
+          {/* <div>
+            <Navbar />
+          </div> */}
+          <div className="items-center flex gap-4 p-2 justify-end">
+            <Button href="/" outline>
               <HomeIcon />
               Home
             </Button>

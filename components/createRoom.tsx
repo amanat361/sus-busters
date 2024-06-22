@@ -6,13 +6,13 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 import { Room } from "@/app/rooms/roomList";
 
-export default function CreateRoomButton({ onCreateRoom }: { onCreateRoom: (room: Room) => void }) {
+export default function CreateRoomButton({ currentRooms, onCreateRoom }: { currentRooms: Room[], onCreateRoom: (room: Room) => void }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const createRoom = async () => {
     setIsLoading(true);
-    const roomName = await getRoomName();
-    const roomId = nanoid();
+    const roomName = await getRoomName(currentRooms);
+    const roomId = Math.random().toString(36).substring(2, 6);
     onCreateRoom({ id: roomId, name: roomName });
     setIsLoading(false);
   }

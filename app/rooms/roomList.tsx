@@ -23,6 +23,7 @@ export default function RoomList() {
         ))}
       </div>
       <CreateRoomButton
+        currentRooms={rooms}
         onCreateRoom={(room) => setRooms((rooms) => [...rooms, room])}
       />
     </div>
