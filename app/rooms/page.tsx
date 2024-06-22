@@ -29,7 +29,7 @@ export default function Room() {
       <ul>
         {mockRooms.map((room) => (
           <li key={room.id}>
-            <a href={`/room/${room.id}`}>{room.name}</a>
+            <a href={`/rooms/${room.id}`}>{room.name}</a>
           </li>
         ))}
       </ul>

@@ -6,7 +6,7 @@ export default function CreateRoom() {
   const roomId = nanoid();
 
   return (
-    <Button href={`/room/${roomId}`}>
+    <Button href={`/rooms/${roomId}`}>
       Create Room
       <PlusCircleIcon />
     </Button>
