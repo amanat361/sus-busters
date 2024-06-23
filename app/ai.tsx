@@ -4,6 +4,7 @@ import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { Room } from "./rooms/roomList";
+import { revalidatePath } from "next/cache";
 
 export async function getRoomName(currentRooms: Room[]) {
   const { object } = await generateObject({
@@ -54,5 +55,6 @@ export async function getRoomQuestions() {
     temperature: 1,
   });
 
+  revalidatePath("/rooms");
   return object.questions;
 }

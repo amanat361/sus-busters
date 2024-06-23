@@ -19,7 +19,8 @@ export default function CreateRoomButton({
   const createRoom = async () => {
     setIsLoading(true);
     const roomName = await getRoomName(currentRooms);
-    const roomQuestions = await getRoomQuestions();
+    // const roomQuestions = await getRoomQuestions();
+    const roomQuestions = [] as string[];
     const roomId = Math.random().toString(36).substring(2, 6);
     const roomColor = randomHexColor();
     onCreateRoom({
