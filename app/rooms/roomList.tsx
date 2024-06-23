@@ -8,7 +8,9 @@ import CreateRoomButton from "@/components/createRoom";
 
 export type Room = {
   id: string;
+  color: string;
   name: string;
+  questions: string[];
 };
 
 export default function RoomList() {
