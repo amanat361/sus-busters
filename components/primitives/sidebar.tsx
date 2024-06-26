@@ -115,6 +115,7 @@ export const SidebarItem = React.forwardRef(function SidebarItem(
       )}
       {'href' in props ? (
         <Headless.CloseButton
+          // @ts-ignore
           as={Link}
           {...props}
           className={classes}
