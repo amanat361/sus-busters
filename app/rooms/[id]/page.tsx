@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Heading } from "@/components/primitives/heading";
 import { getRoom, getRoomMessages, addMessageToRoom } from "@/app/lib/kv-store";
-import MessageInput from "@/components/MessagesInput";
 import { Room } from "@/app/lib/kv-store";
+import MessageInput from "@/components/MessagesInput";
 
 export default function RoomPage({ params }: { params: { id: string } }) {
   const [room, setRoom] = useState<Room | null>(null);
@@ -45,7 +45,9 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         ) : (
           <ul className="list-disc pl-5">
             {messages.map((message, index) => (
-              <li key={index}>{message}</li>
+              <React.Fragment key={index}>
+                {message}
+              </React.Fragment>
             ))}
           </ul>
         )}
