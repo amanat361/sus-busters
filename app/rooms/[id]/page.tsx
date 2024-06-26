@@ -20,7 +20,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
     fetchRoomData();
 
-    const intervalId = setInterval(fetchRoomData, 5000); // Refresh every 5 seconds
+    const intervalId = setInterval(fetchRoomData, 2000); // Refresh every 50 milliseconds
 
     return () => clearInterval(intervalId);
   }, [params.id]);
