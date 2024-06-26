@@ -1,20 +1,26 @@
-"use client";
+"use client"
 
-import { Text } from "@/components/primitives/text";
-import Link from "next/link";
-import { useState } from "react";
-import RoomCard from "./roomCard";
-import CreateRoomButton from "@/components/createRoom";
-
-export type Room = {
-  id: string;
-  color: string;
-  name: string;
-  questions: string[];
-};
+import { useState, useEffect } from 'react';
+import { Text } from '@/components/primitives/text';
+import RoomCard from './roomCard';
+import CreateRoomButton from './createRoom';
+import { getAllRoomIds, getRoom, Room } from '@/app/lib/kv-store';
 
 export default function RoomList() {
   const [rooms, setRooms] = useState<Room[]>([]);
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      const roomIds = await getAllRoomIds();
+      const roomsData = await Promise.all(roomIds.map(id => getRoom(id)));
+      setRooms(roomsData.filter((room): room is Room => room !== null));
+    };
+    fetchRooms();
+  }, []);
+
+  const handleCreateRoom = (newRoom: Room) => {
+    setRooms(prevRooms => [...prevRooms, newRoom]);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -24,10 +30,8 @@ export default function RoomList() {
           <RoomCard key={room.id} {...room} />
         ))}
       </div>
-      <CreateRoomButton
-        currentRooms={rooms}
-        onCreateRoom={(room) => setRooms((rooms) => [...rooms, room])}
-      />
+      <CreateRoomButton currentRooms={rooms} onCreateRoom={handleCreateRoom} />
     </div>
   );
-}
+}import { map } from 'zod';
+

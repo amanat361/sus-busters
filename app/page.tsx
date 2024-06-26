@@ -1,4 +1,4 @@
-import CreateRoomButton from "@/components/createRoom";
+import CreateRoomButton from "@/app/rooms/createRoom";
 import { Button } from "@/components/primitives/button";
 import { Heading } from "@/components/primitives/heading";
 import { EyeIcon } from "@heroicons/react/16/solid";

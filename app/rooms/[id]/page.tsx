@@ -1,19 +1,56 @@
-import { getRoomQuestions } from "@/app/ai";
+"use client";
+
+import { useState, useEffect } from "react";
 import { Heading } from "@/components/primitives/heading";
+import { getRoom, getRoomMessages, addMessageToRoom } from "@/app/lib/kv-store";
+import MessageInput from "@/components/MessagesInput";
+import { Room } from "@/app/lib/kv-store";
 
-export const dynamic = "force-dynamic";
+export default function RoomPage({ params }: { params: { id: string } }) {
+  const [room, setRoom] = useState<Room | null>(null);
+  const [messages, setMessages] = useState<string[]>([]);
 
-export default async function Room({params}: {params: {id: string}}) {
-  const questions = await getRoomQuestions();
+  useEffect(() => {
+    const fetchRoomData = async () => {
+      const roomData = await getRoom(params.id);
+      setRoom(roomData);
+      const roomMessages = await getRoomMessages(params.id);
+      setMessages(roomMessages);
+    };
+
+    fetchRoomData();
+
+    const intervalId = setInterval(fetchRoomData, 5000); // Refresh every 5 seconds
+
+    return () => clearInterval(intervalId);
+  }, [params.id]);
+
+  const handleSendMessage = async (message: string) => {
+    await addMessageToRoom(params.id, message);
+    setMessages((prevMessages) => [message, ...prevMessages]);
+  };
+
+  if (!room) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div>
-      <Heading>Room {params.id}</Heading>
+    <div className="flex flex-col gap-4">
+      <Heading>{room.name}</Heading>
+      <div>Room ID: {room.id}</div>
       <div className="flex flex-col gap-4">
-        {questions.map((question) => (
-          <div key={question}>{question}</div>
-        ))}
+        <h2 className="text-xl font-bold">Messages:</h2>
+        {messages.length === 0 ? (
+          <p>No messages yet</p>
+        ) : (
+          <ul className="list-disc pl-5">
+            {messages.map((message, index) => (
+              <li key={index}>{message}</li>
+            ))}
+          </ul>
+        )}
       </div>
+      <MessageInput onSendMessage={handleSendMessage} />
     </div>
   );
 }

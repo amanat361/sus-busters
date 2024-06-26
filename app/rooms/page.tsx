@@ -1,7 +1,7 @@
-import { Heading } from "@/components/primitives/heading";
-import RoomList from "./roomList";
+import { Heading } from '@/components/primitives/heading';
+import RoomList from './roomList';
 
-export default function Room() {
+export default function RoomsPage() {
   return (
     <div className="flex flex-col gap-4">
       <Heading>Rooms</Heading>
